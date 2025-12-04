@@ -33,4 +33,5 @@ message(STATUS "SystemC library file: ${SYSTEMC_LIBRARY_FILE}")
 
 add_subdirectory(ips/hello_counter)
 add_subdirectory(ips/uart_tx)
+add_subdirectory(ips/apb_timer)
 add_subdirectory(tests/unit_tests)
