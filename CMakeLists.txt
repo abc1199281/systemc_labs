@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 project(MySystemC_Repo)
 
+enable_testing()
+
 set(CMAKE_CXX_STANDARD 17)
 
 if (NOT DEFINED ENV{SYSTEMC_HOME})
@@ -30,4 +32,5 @@ message(STATUS "SystemC include directory: ${SYSTEMC_INCLUDE_DIR}")
 message(STATUS "SystemC library file: ${SYSTEMC_LIBRARY_FILE}")
 
 add_subdirectory(ips/hello_counter)
+add_subdirectory(ips/uart_tx)
 add_subdirectory(tests/unit_tests)
