@@ -17,3 +17,12 @@ target_link_libraries(test_uart_tx
     Catch2::Catch2WithMain
 )
 add_test(NAME test_uart_tx COMMAND test_uart_tx)
+
+# Test for apb_timer
+add_executable(test_apb_timer test_apb_timer.cpp)
+target_link_libraries(test_apb_timer
+    PRIVATE 
+    apb_timer 
+    Catch2::Catch2WithMain
+)
+add_test(NAME test_apb_timer COMMAND test_apb_timer)
