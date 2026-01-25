@@ -1,2 +1,14 @@
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Build directory
 build*
+
+# Traces
 *.vcd
+*.log
+
+# Notes
+notes*
