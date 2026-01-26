@@ -62,3 +62,32 @@ target_link_libraries(test_tlm_simple_bus_lt
 )
 
 add_test(NAME test_tlm_simple_bus_lt COMMAND test_tlm_simple_bus_lt)
+
+# Test for LT Example Recreation
+add_executable(test_tlm_lt
+    tlm/lt/test_lt.cpp
+    ../../thirdparty/accellera/tlm/lt/src/lt_top.cpp
+    ../../thirdparty/accellera/tlm/lt/src/initiator_top.cpp
+    ../../thirdparty/accellera/tlm/common/src/lt_initiator.cpp
+    ../../thirdparty/accellera/tlm/common/src/lt_target.cpp
+    ../../thirdparty/accellera/tlm/common/src/at_target_1_phase.cpp
+    ../../thirdparty/accellera/tlm/common/src/traffic_generator.cpp
+    ../../thirdparty/accellera/tlm/common/src/memory.cpp
+    ../../thirdparty/accellera/tlm/common/src/report.cpp
+)
+
+target_include_directories(test_tlm_lt 
+    PRIVATE 
+    tlm/lt
+    ../../thirdparty/accellera/tlm/lt/include
+    ../../thirdparty/accellera/tlm/common/include
+    ../../thirdparty/accellera/tlm/common/include/tlm
+)
+
+target_link_libraries(test_tlm_lt 
+    PRIVATE 
+    Catch2::Catch2
+    SystemC::systemc
+)
+
+add_test(NAME test_tlm_lt COMMAND test_tlm_lt)
