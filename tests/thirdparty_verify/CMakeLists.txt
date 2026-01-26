@@ -41,3 +41,24 @@ target_link_libraries(test_traffic_gen
 )
 
 add_test(NAME test_traffic_gen COMMAND test_traffic_gen)
+
+# Test for SimpleBusLT
+add_executable(test_tlm_simple_bus_lt
+    tlm/common/models/test_simple_bus_lt.cpp
+    ../../thirdparty/accellera/tlm/common/src/memory.cpp
+    ../../thirdparty/accellera/tlm/common/src/report.cpp
+)
+
+target_include_directories(test_tlm_simple_bus_lt
+    PRIVATE
+    ../../thirdparty/accellera/tlm/common/include
+    ../../thirdparty/accellera/tlm/common/include/tlm
+)
+
+target_link_libraries(test_tlm_simple_bus_lt
+    PRIVATE
+    Catch2::Catch2
+    SystemC::systemc
+)
+
+add_test(NAME test_tlm_simple_bus_lt COMMAND test_tlm_simple_bus_lt)
