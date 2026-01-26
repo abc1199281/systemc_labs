@@ -26,3 +26,12 @@ target_link_libraries(test_apb_timer
     Catch2::Catch2WithMain
 )
 add_test(NAME test_apb_timer COMMAND test_apb_timer)
+
+# Test for arbitrator
+add_executable(test_arbitrator test_arbitrator.cpp)
+target_link_libraries(test_arbitrator
+    PRIVATE
+    arbitrator
+    Catch2::Catch2WithMain
+)
+add_test(NAME test_arbitrator COMMAND test_arbitrator)
