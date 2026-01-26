@@ -1,13 +1,20 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch2/catch_all.hpp>
 #include <systemc>
-#include "tlm/memory.h"
+
+// The reporting globals need to be defined in one compilation unit
+#define REPORT_DEFINE_GLOBALS
+#include "reporting.h"
+#include "memory.h"
 #include <tlm>
 
 using namespace sc_core;
 
 // Define sc_main which is required by SystemC
 int sc_main(int argc, char* argv[]) {
+    // Initialize reporting enables
+    REPORT_ENABLE_ALL_REPORTING();
+    
     int result = Catch::Session().run(argc, argv);
     return result;
 }
@@ -51,9 +58,10 @@ TEST_CASE("Memory Operation - Read/Write", "[memory]") {
         REQUIRE(gp.get_response_status() == tlm::TLM_OK_RESPONSE);
 
         std::cout << "Write Data at " << std::hex << addr << ": ";
+        unsigned char* mem_ptr = mem.get_mem_ptr();
         for (unsigned int i = 0; i < 4; ++i) {
-            std::cout << std::hex << static_cast<int>(mem.m_memory[addr + i]) << " ";
-            REQUIRE(mem.m_memory[addr + i] == data_buffer[i]);
+            std::cout << std::hex << static_cast<int>(mem_ptr[addr + i]) << " ";
+            REQUIRE(mem_ptr[addr + i] == data_buffer[i]);
         }
         std::cout << std::dec << std::endl;
         std::cout << "Write Delay: " << delay.to_string() << std::endl;
@@ -62,9 +70,10 @@ TEST_CASE("Memory Operation - Read/Write", "[memory]") {
 
     SECTION("Read Operation") {
         uint64_t addr = 0x10;
+        unsigned char* mem_ptr = mem.get_mem_ptr();
         // Backdoor write to memory to ensure we have something to read
         for(int i=0; i<4; i++) {
-            mem.m_memory[addr + i] = data_buffer[i];
+            mem_ptr[addr + i] = data_buffer[i];
         }
 
         // Clear data buffer to verify it gets populated
@@ -109,8 +118,8 @@ TEST_CASE("Memory Address Checking", "[memory]") {
     }
 
     SECTION("Invalid Size - Burst Beyond Range") {
-        setup_payload(gp, tlm::TLM_READ_COMMAND, size - 2, data_buffer, 4);
+        setup_payload(gp, tlm::TLM_READ_COMMAND, size + 2, data_buffer, 4);
         mem.operation(gp, delay);
-        REQUIRE(gp.get_response_status() == tlm::TLM_BURST_ERROR_RESPONSE);
+        REQUIRE(gp.get_response_status() == tlm::TLM_ADDRESS_ERROR_RESPONSE);
     }
 }
