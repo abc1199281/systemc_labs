@@ -10,5 +10,3 @@ build*
 *.vcd
 *.log
 
-# Notes
-notes*
