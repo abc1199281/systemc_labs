@@ -35,3 +35,12 @@ target_link_libraries(test_arbitrator
     Catch2::Catch2WithMain
 )
 add_test(NAME test_arbitrator COMMAND test_arbitrator)
+
+# Test for simple_DMA
+add_executable(test_simple_dma test_simple_dma.cpp)
+target_link_libraries(test_simple_dma
+    PRIVATE
+    simple_DMA
+    Catch2::Catch2WithMain
+)
+add_test(NAME test_simple_dma COMMAND test_simple_dma)
