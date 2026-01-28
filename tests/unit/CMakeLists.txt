@@ -44,3 +44,12 @@ target_link_libraries(test_simple_dma
     Catch2::Catch2WithMain
 )
 add_test(NAME test_simple_dma COMMAND test_simple_dma)
+
+# Test for sync_fifo
+add_executable(test_sync_fifo test_sync_fifo.cpp)
+target_link_libraries(test_sync_fifo
+    PRIVATE
+    sync_fifo
+    Catch2::Catch2WithMain
+)
+add_test(NAME test_sync_fifo COMMAND test_sync_fifo)
